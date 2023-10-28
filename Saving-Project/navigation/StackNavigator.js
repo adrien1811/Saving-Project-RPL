@@ -3,13 +3,26 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from "../screens/SplashScreen";
+import LoginScreen from "../screens/LoginScreen/LoginScreen";
+
 
 const StackNavigator = () => {
     const Stack = createNativeStackNavigator();
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="SplashScreen" component={SplashScreen} />
+                <Stack.Screen name="SplashScreen" component={SplashScreen} 
+                options={{
+                    headerStyle: {backgroundColor: "white"},
+                    headerShown: false
+                }}
+                />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} 
+                options={{
+                    headerStyle: {backgroundColor: "white"},
+                    headerShown: false
+                }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );

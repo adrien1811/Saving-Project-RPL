@@ -1,11 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Button } from 'react-native';
 import React from 'react';
+import { COLORS } from '../constants/theme';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native'; 
 
 const SplashScreen = () => {
+    const navigation = useNavigation();
+
     return (
-        <View>
+        <SafeAreaView style={{flex : 1, backgroundColor: "white"}}>
             <Text>SplashScreen</Text>
-        </View>
+            <Button title="LoginScreen"
+            color={COLORS.Saving_Blue}
+            onPress={() => {
+                navigation.navigate('LoginScreen'); // Navigate to the Login screen
+            }}
+            />
+        </SafeAreaView>
     );
 }
 
