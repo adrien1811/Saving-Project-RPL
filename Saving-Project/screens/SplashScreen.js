@@ -11,10 +11,18 @@ const SplashScreen = () => {
     return (
         <SafeAreaView style={{flex : 1, backgroundColor: "white"}}>
             <Text>SplashScreen</Text>
+
             <Button title="LoginScreen"
             color={COLORS.Saving_Blue}
             onPress={() => {
                 navigation.navigate('LoginScreen'); // Navigate to the Login screen
+            }}
+            />
+
+            <Button title="RegisterScreen"
+            color={COLORS.Saving_Blue}
+            onPress={() => {
+                navigation.navigate('RegisterScreen'); // Navigate to the Login screen
             }}
             />
         </SafeAreaView>
