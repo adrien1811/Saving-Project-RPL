@@ -25,6 +25,13 @@ const SplashScreen = () => {
                 navigation.navigate('RegisterScreen'); // Navigate to the Login screen
             }}
             />
+
+            <Button title="ConfirmationScreen"
+            color={COLORS.Saving_Blue}
+            onPress={() => {
+                navigation.navigate('ConfirmationScreen'); // Navigate to the Login screen
+            }}
+            />
         </SafeAreaView>
     );
 }
