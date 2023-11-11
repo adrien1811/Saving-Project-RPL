@@ -32,6 +32,13 @@ const SplashScreen = () => {
                 navigation.navigate('ConfirmationScreen'); // Navigate to the Login screen
             }}
             />
+
+            <Button title="TransferScreen"
+            color={COLORS.Saving_Blue}
+            onPress={() => {
+                navigation.navigate('TransferScreen'); // Navigate to the Login screen
+            }}
+            />
         </SafeAreaView>
     );
 }
