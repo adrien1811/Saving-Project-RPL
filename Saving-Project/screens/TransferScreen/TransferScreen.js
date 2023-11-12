@@ -1,7 +1,5 @@
 import { StyleSheet, Text, View, Image, Button, TextInput, KeyboardAvoidingView, Pressable } from 'react-native';
-import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { COLORS, SIZES } from '../../constants/theme';
 import styles from './TransferScreen.style';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -27,7 +25,21 @@ const TransferScreen = ({ value, onChangeText }) => {
             />
             </View>
 
-            <View style = {{marginTop : 70,}}/>
+            <View style = {{marginTop : 15, alignItems: 'center'}}>
+                <Text style = {{
+                    fontSize: 22
+                }}>
+                    Category
+                </Text>
+                <Text style = {{
+                    fontSize: 22,
+                    opacity: 0.6
+                }}>
+                    Entertainment
+                </Text>
+            </View>
+
+            <View style = {{marginTop : 40,}}/>
 
             <View style = {styles.BtnContainerRow}>
 
@@ -138,6 +150,9 @@ const TransferScreen = ({ value, onChangeText }) => {
             </View>
 
             <View style = {styles.BtnContainerRow}>
+                <View style={
+                    styles.blank
+                    }/>
 
                 <Pressable
                 style={
@@ -149,6 +164,18 @@ const TransferScreen = ({ value, onChangeText }) => {
                        0 
                     </Text>
                 </Pressable>
+
+                <Pressable
+                style={
+                    styles.btnEnter
+                    }>
+                    <Text style={
+                    styles.enterText
+                    }>
+                       <AntDesign name="arrowright" size={45} color="white" /> 
+                    </Text>
+                </Pressable>
+
             </View>
 
 

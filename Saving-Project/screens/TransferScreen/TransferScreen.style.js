@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row', // Arrange "IDR" and TextInput horizontally
     alignItems: 'center', // Center them vertically
+    borderBottomWidth: 1,
+    borderColor: "#F5F6FA"
   },
 
   currencyText: {
@@ -67,7 +69,35 @@ const styles = StyleSheet.create({
     padding: 15,
     fontSize: SIZES.xLarge,
     fontWeight: 'bold'
-  }
+  },
+
+  blank: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: SIZES.xLarge,
+    height: 80,
+    width: 90,
+    marginBottom: 10,
+  },
+
+  btnEnter: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: SIZES.xLarge,
+    backgroundColor: COLORS.Saving_Blue,
+    height: 80,
+    width: 90,
+    marginBottom: 10,
+  },
+
+  enterText: {
+    textAlign: 'center',
+    color: "white",
+    alignItems: 'center',
+    padding: 15,
+    fontSize: SIZES.xLarge,
+    fontWeight: 'bold'
+  },
 
 });
 
