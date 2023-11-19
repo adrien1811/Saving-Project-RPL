@@ -15,7 +15,7 @@ import { COLORS, SIZES } from "../../constants/theme";
 import styles from "./HomePageScreen.style";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import LinearGradient from "react-native-linear-gradient";
+// import LinearGradient from "react-native-linear-gradient";
 
 const HomePageScreen = () => {
   const navigation = useNavigation();
@@ -34,6 +34,22 @@ const HomePageScreen = () => {
             </View>
           </View>
         </View>
+        <Pressable
+          onPress={() => {
+            navigation.navigate("TransferScreen"); // Navigate to the Login screen
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.Saving_Blue,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: 15,
+            }}
+          >
+            Want to Trasnfer money?
+          </Text>
+        </Pressable>
         <View>
           <Text style={styles.viewarticle}>View Article</Text>
           <View style={styles.frame}>
