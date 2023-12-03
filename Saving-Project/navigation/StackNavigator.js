@@ -9,6 +9,7 @@ import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
 import ConfirmationScreen from "../screens/ConfirmationScreen/ConfirmationScreen";
 import TransferScreen from "../screens/TransferScreen/TransferScreen";
+import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
@@ -97,6 +98,16 @@ const StackNavigator = () => {
             headerTitleAlign: "center",
           }}
         />
+
+          <Stack.Screen
+          name="ExpenseScreen"
+          component={ExpenseScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
