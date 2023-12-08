@@ -188,6 +188,41 @@ const RegisterScreen = () => {
                 Navigate to Tax?
               </Text>
             </Pressable>
+
+            <Pressable
+              onPress={() => {
+                navigation.navigate("ExpenseScreen");
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.Saving_Blue,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 15,
+                }}
+              >
+                Navigate to Expense?
+              </Text>
+            </Pressable>
+            
+            <Pressable
+              onPress={() => {
+                navigation.navigate("IncomeScreen");
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.Saving_Blue,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 15,
+                }}
+              >
+                Navigate to Income?
+              </Text>
+            </Pressable>
+
             {errorAlert && (
               <View style={styles.errorAlert}>
                 <Text style={styles.errorText}>{errorAlert}</Text>

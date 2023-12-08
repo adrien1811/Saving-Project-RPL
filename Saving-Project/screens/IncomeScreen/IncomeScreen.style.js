@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     height: 100,
-    backgroundColor: COLORS.Saving_Red,
+    backgroundColor: COLORS.Saving_Green,
     marginTop: 10
   },
 
@@ -69,29 +69,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     height: 100,
-    backgroundColor: "chocolate",
-    marginTop: 10
-  },
-
-  Categories3: {
-    marginTop: SIZES.Small,
-    alignItems: "center",
-    borderRadius: SIZES.medium,
-    height: 50,
-    width: 150,
-    height: 100,
-    backgroundColor: "gold",
-    marginTop: 10
-  },
-
-  Categories4: {
-    marginTop: SIZES.Small,
-    alignItems: "center",
-    borderRadius: SIZES.medium,
-    height: 50,
-    width: 150,
-    height: 100,
-    backgroundColor: "purple",
+    backgroundColor: "skyblue",
     marginTop: 10
   },
 
@@ -161,8 +139,21 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 
+  Btn: {
+    marginTop: SIZES.xxLarge,
+    alignItems: "center",
+    backgroundColor: COLORS.Saving_Blue,
+    borderRadius: SIZES.medium,
+    height: 50,
+    width:300,    
+  },
 
-
+  BtnText: {
+    textAlign: 'center',
+    color: 'white',
+    alignItems: 'center',
+    padding: 15
+  },
   
 });
 
