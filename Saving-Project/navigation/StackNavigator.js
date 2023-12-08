@@ -12,6 +12,7 @@ import TransferScreen from "../screens/TransferScreen/TransferScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import InvestScreen from "../screens/InvestScreen/InvestScreen";
 import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen";
+import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
@@ -124,6 +125,15 @@ const StackNavigator = () => {
             headerShown: false,
           }}
         />
+          <Stack.Screen
+          name="ExpenseScreen"
+          component={ExpenseScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

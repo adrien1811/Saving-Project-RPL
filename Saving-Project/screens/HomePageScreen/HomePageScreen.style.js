@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     left: 30,
     letterSpacing: 0,
-    lineHeight: 1.5,
+    lineHeight: SIZES.medium,
     position: "absolute",
     top: 29,
     width: 318,
@@ -56,10 +56,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     left: 30,
     letterSpacing: 0,
-    lineHeight: 1.5,
     position: "absolute",
     top: 65,
-    whiteSpace: "nowrap",
   },
 
   viewarticle: {

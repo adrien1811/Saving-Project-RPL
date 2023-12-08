@@ -12,7 +12,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, SIZES } from "../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
-import styles from "./InvestScreen.style";
+import styles from "./InvestResultScreen.style";
 import { useNavigation } from "@react-navigation/native";
 
 const InvestScreen = () => {

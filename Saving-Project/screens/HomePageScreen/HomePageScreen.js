@@ -29,7 +29,7 @@ const HomePageScreen = () => {
         <View style={[styles.totalAssetParent, styles.pageTitlePosition]}>
           <View style={{ alignItems: "center" }}>
             <View style={styles.rectangle}>
-              <Text style={styles.titleLabel}>Your Total Expenses</Text>
+                <Text style={styles.titleLabel}>Your Total Expenses</Text>
               <Text style={styles.assetLabel}>Rp 500.000</Text>
             </View>
           </View>
@@ -50,6 +50,24 @@ const HomePageScreen = () => {
             Want to Trasnfer money?
           </Text>
         </Pressable>
+
+        <Pressable
+          onPress={() => {
+            navigation.navigate("ExpenseScreen"); // Navigate to the Login screen
+          }}
+        >
+          <Text
+            style={{
+              color: COLORS.Saving_Blue,
+              fontWeight: "bold",
+              textAlign: "center",
+              margin: 15,
+            }}
+          >
+            ExpenseScreen
+          </Text>
+        </Pressable>
+
         <View>
           <Text style={styles.viewarticle}>View Article</Text>
           <View style={styles.frame}>
