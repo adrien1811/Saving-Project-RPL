@@ -30,12 +30,33 @@ app.listen(port,() => {
 });
 
 //register endpoint
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\d{12}$/;
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+
 app.post('/register', async (req, res) => {
   try {
     const { fullName, emailAddress, phoneNumber, password, age } = req.body;
 
     if (!fullName || !emailAddress || !phoneNumber || !password || !age) {
       return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // Validate email using regex
+    if (!emailRegex.test(emailAddress)) {
+      return res.status(400).json({ message: 'Invalid email address' });
+    }
+
+    // Validate phone number using regex
+    if (!phoneRegex.test(phoneNumber)) {
+      return res.status(400).json({ message: 'Invalid phone number' });
+    }
+
+    // Validate password using regex
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({
+        message: 'Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number',
+      });
     }
 
     const existingEmailUser = await User.findOne({ emailAddress: emailAddress });
@@ -65,9 +86,8 @@ app.post('/register', async (req, res) => {
   }
 });
 
-
 //login endpoint
-  app.get('/login', async (req, res) => {
+  app.post('/login', async (req, res) => {
     try {
       const { emailAddress, password } = req.body;
   

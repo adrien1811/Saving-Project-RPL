@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -21,9 +21,26 @@ const InvestScreen = () => {
   const [profitPerYear, setProfitPerYear] = useState("");
   const [duration, setDuration] = useState("");
   const [investmentNominal, setInvestmentNominal] = useState("");
+  const [isInputsFilled, setIsInputsFilled] = useState(false);
 
+  useEffect(() => {
 
-
+    if (stockName !== "" && profitPerYear !== "" && duration !== "" && investmentNominal !== "") {
+      setIsInputsFilled(true);
+    } else {
+      setIsInputsFilled(false);
+    }
+  }, [stockName, profitPerYear, duration, investmentNominal]);
+  const handleNextPress = () => {
+    if (isInputsFilled) {
+      navigation.navigate("InvestResultScreen", {
+        stockName,
+        profitPerYear,
+        duration,
+        investmentNominal,
+      });
+    } 
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.container}>
@@ -34,7 +51,7 @@ const InvestScreen = () => {
         <Text style={styles.title}>Investment Calculator</Text>
         <View style={styles.cardContainer}>
           <View style={styles.cardContent}>
-          <Text style={styles.ask}>Stock Name</Text>
+            <Text style={styles.ask}>Stock Name</Text>
             <TextInput
               style={styles.input}
               placeholder="Enter Stock Name"
@@ -77,10 +94,9 @@ const InvestScreen = () => {
             <Text style={[styles.BtnText, styles.CancelText]}>Cancel</Text>
           </Pressable>
           <Pressable
-            style={[styles.Btn, { marginLeft: 5 }]}
-            onPress={() => {
-              navigation.navigate("InvestResultScreen");
-            }}
+            style={[styles.Btn, { marginLeft: 5, opacity: isInputsFilled ? 1 : 0.5 }]}
+            disabled={!isInputsFilled}
+            onPress={handleNextPress}
           >
             <Text style={styles.BtnText}>Next</Text>
           </Pressable>
@@ -117,7 +133,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 3,
-    backgroundColor: '#C1C9BE',
+    backgroundColor: '#DEF4DE',
   },
   cardContent: {
     padding: 10,

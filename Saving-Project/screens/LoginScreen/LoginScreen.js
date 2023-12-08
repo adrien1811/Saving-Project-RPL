@@ -1,22 +1,55 @@
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
-  Button,
   TextInput,
   KeyboardAvoidingView,
   Pressable,
+  Alert,
 } from "react-native";
-import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { COLORS, SIZES } from "../../constants/theme";
 import styles from "./LoginScreen.style";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const [emailAddress, setEmailAddress] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    try {
+      const url = "http://192.168.10.122:8000/login";
+      const requestBody = {
+        emailAddress: emailAddress,
+        password: password,
+      };
+  
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      const contentType = response.headers.get('content-type');
+      const responseData = await response.json();
+  
+      if (response.ok && contentType && contentType.includes('application/json')) {
+        console.log('Login success:', responseData);
+        navigation.navigate("HomePageScreen");
+      } else {
+        console.log('Login failed:', responseData);
+        Alert.alert('Login Failed', 'Login failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert('Login Error', 'An error occurred while trying to login. Please try again.');
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -24,22 +57,28 @@ const LoginScreen = () => {
         <AntDesign name="left" size={24} color="black" />
       </View>
 
-      <KeyboardAvoidingView style={{ alignItems: "center" }}>
+      <KeyboardAvoidingView style={{ alignItems: "center", flex: 1 }}>
         <Text style={styles.title}>Log in to your Saving account</Text>
 
         <View style={{ marginTop: 50 }}>
           <View style={styles.ViewInput}>
-            <TextInput style={styles.TextInput} placeholder="Email Address" />
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Email Address"
+              value={emailAddress}
+              onChangeText={(text) => setEmailAddress(text)}
+            />
 
-            <TextInput style={styles.TextInput} placeholder="Password" />
+            <TextInput
+              style={styles.TextInput}
+              placeholder="Password"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
           </View>
 
-          <Pressable
-            style={styles.Btn}
-            onPress={() => {
-              navigation.navigate("HomePageScreen");
-            }}
-          >
+          <Pressable style={styles.Btn} onPress={handleLogin}>
             <Text style={styles.BtnText}>Login</Text>
           </Pressable>
         </View>

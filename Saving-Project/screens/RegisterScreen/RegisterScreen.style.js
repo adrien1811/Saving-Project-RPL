@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.Saving_Blue,
     borderRadius: SIZES.medium,
     height: 50,
+    width:300,    
   },
 
   BtnText: {
@@ -47,7 +48,17 @@ const styles = StyleSheet.create({
     color: 'white',
     alignItems: 'center',
     padding: 15
-  }
+  },
+  errorAlert: {
+    backgroundColor: "#FFCACA",
+    padding: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+  },
 });
 
 export default styles;
