@@ -75,6 +75,38 @@ const RegisterScreen = () => {
                 Already have an account?
               </Text>
             </Pressable>
+            <Pressable
+             onPress={() => {
+                navigation.navigate("ProfileScreen"); // Navigate to the Login screen
+              }}
+            >
+            <Text
+                style={{
+                  color: COLORS.Saving_Blue,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 15,
+                }}
+              >
+               navigate to profile?
+              </Text>
+            </Pressable>
+            <Pressable
+             onPress={() => {
+                navigation.navigate("InvestScreen"); // Navigate to the Login screen
+              }}
+            >
+            <Text
+                style={{
+                  color: COLORS.Saving_Blue,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 15,
+                }}
+              >
+               navigate to Tax?
+              </Text>
+            </Pressable>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>

@@ -9,6 +9,9 @@ import RegisterScreen from "../screens/RegisterScreen/RegisterScreen";
 import HomePageScreen from "../screens/HomePageScreen/HomePageScreen";
 import ConfirmationScreen from "../screens/ConfirmationScreen/ConfirmationScreen";
 import TransferScreen from "../screens/TransferScreen/TransferScreen";
+import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
+import InvestScreen from "../screens/InvestScreen/InvestScreen";
+import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
@@ -95,6 +98,30 @@ const StackNavigator = () => {
               alignContent: "center",
             },
             headerTitleAlign: "center",
+          }}
+        />
+          <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+          <Stack.Screen
+          name="InvestScreen"
+          component={InvestScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="InvestResultScreen"
+          component={InvestResultScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   container: {
-    flexDirection: 'row', // Arrange "IDR" and TextInput horizontally
-    alignItems: 'center', // Center them vertically
+    flexDirection: 'row',
+    alignItems: 'center', 
     borderBottomWidth: 1,
     borderColor: "#F5F6FA"
   },
