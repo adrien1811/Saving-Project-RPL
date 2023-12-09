@@ -21,7 +21,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      const url = "http://192.168.100.89:8000/login";
+      const url = "http://192.168.10.122:8000/login";
       const requestBody = {
         emailAddress: emailAddress,
         password: password,
@@ -40,7 +40,12 @@ const LoginScreen = () => {
   
       if (response.ok && contentType && contentType.includes('application/json')) {
         console.log('Login success:', responseData);
-        navigation.navigate("HomePageScreen");
+  
+        // Extract userId from the response (modify this according to your response structure)
+        const userId = responseData.user._id; // Assuming the userId is available in responseData.user._id
+  
+        // Navigate to HomePageScreen and pass userId as a parameter
+        navigation.navigate("HomePageScreen", { userId: userId });
       } else {
         console.log('Login failed:', responseData);
         Alert.alert('Login Failed', 'Login failed. Please try again.');

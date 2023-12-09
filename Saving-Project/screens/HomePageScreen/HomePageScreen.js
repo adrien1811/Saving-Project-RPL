@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Modal , Pressable} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Modal, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS, FONT, SIZES } from '../../constants/theme';
 
 const HomePageScreen = () => {
+  const route = useRoute(); // Initialize route with useRoute
+  const { userId } = route.params;
   const navigation = useNavigation();
   const [showMenu, setShowMenu] = useState(false);
+  const [fullName, setFullName] = useState(''); // Define fullName in the state
+  const [totalExpenses, setTotalExpenses] = useState(0); // Define totalExpenses in the state
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -29,6 +33,27 @@ const HomePageScreen = () => {
     setShowMenu(false);
   };
 
+  useEffect(() => {
+    // Function to fetch user details based on userId
+    const fetchUserDetails = async () => {
+      try {
+        const url = `http://192.168.10.122:8000/userDetails/${userId}`;
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const userDetails = await response.json();
+          setFullName(userDetails.userDetails.fullName);
+          setTotalExpenses(userDetails.userDetails.totalExpenses);
+        } else {
+          console.error('Failed to fetch user details');
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchUserDetails(); // Fetch user details when the component mounts
+  }, [userId]); // Ensure useEffect runs when userId changes
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -60,13 +85,13 @@ const HomePageScreen = () => {
             </View>
           </View>
         </Modal>
-      <Text style={styles.title}>Welcome Username</Text>
+        <Text style={styles.title}>Welcome {fullName}</Text>
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.cardContent}>
               <Text style={styles.expenseText}>Your Total Expense</Text>
               <View style={styles.row}>
-                <Text style={styles.expenseAmount}>Rp 500.000</Text>
+                <Text style={styles.expenseAmount}>{totalExpenses}</Text>
                 <Pressable
                   style={styles.btn}
                   onPress={() => {

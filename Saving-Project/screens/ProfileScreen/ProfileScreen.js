@@ -76,14 +76,6 @@ const ProfileScreen = () => {
         <Text style={styles.title}>Contact Info</Text>
       </View>
       <KeyboardAvoidingView style={{ alignItems: "center" }}>
-        <Image
-          style={{
-            width: 120,
-            height: 120,
-            alignContent: "center",
-          }}
-          source={require("../../assets/Profile.png")}
-        />
         <View
           style={{
             marginTop: 30,
