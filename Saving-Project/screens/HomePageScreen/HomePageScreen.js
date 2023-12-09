@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Modal , Pressable} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
@@ -18,7 +19,13 @@ const HomePageScreen = () => {
     setShowMenu(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      navigation.navigate("LoginScreen");
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
     setShowMenu(false);
   };
 
@@ -53,7 +60,7 @@ const HomePageScreen = () => {
             </View>
           </View>
         </Modal>
-      <Text style={styles.title}>Welcome Wisang</Text>
+      <Text style={styles.title}>Welcome Username</Text>
         <View style={styles.container}>
           <View style={styles.cardContainer}>
             <View style={styles.cardContent}>

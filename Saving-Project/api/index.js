@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false}));
 app.use(bodyParser.json());
 
 const jwt = require("jsonwebtoken");
+const secretKey = "12345"; 
 const User = require("./models/user");
 const Forum = require("./models/forum");
 
@@ -87,38 +88,62 @@ app.post('/register', async (req, res) => {
 });
 
 //login endpoint
-  app.post('/login', async (req, res) => {
-    try {
-      const { emailAddress, password } = req.body;
-  
-      if (!emailAddress || !password) {
-        return res.status(400).json({ message: 'Email and password are required' });
-      }
-  
-      const user = await User.findOne({ emailAddress });
-  
-      if (!user) {
-        return res.status(401).json({ message: 'User not found' });
-      }
-  
-      if (user.password !== password) {
-        return res.status(401).json({ message: 'Incorrect password' });
-      }
+app.post('/login', async (req, res) => {
+  try {
+    const { emailAddress, password } = req.body;
 
-      const userData = {
-        _id: user._id,
-        fullName: user.fullName,
-        emailAddress: user.emailAddress,
-        phoneNumber: user.phoneNumber,
-        age: user.age,
-      };
-
-      return res.status(200).json({ user: userData, message: 'Login successful' });
-    } catch (error) {
-      return res.status(500).json({ message: 'Login failed', error: error.message });
+    if (!emailAddress || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
     }
-  });
 
+    const user = await User.findOne({ emailAddress });
+
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    // Check if the password matches (you might want to hash and compare passwords securely)
+    if (user.password !== password) {
+      return res.status(401).json({ message: 'Incorrect password' });
+    }
+
+    // Create a payload for the JWT token
+    const payload = {
+      _id: user._id,
+      fullName: user.fullName,
+      emailAddress: user.emailAddress,
+      phoneNumber: user.phoneNumber,
+      age: user.age,
+    };
+
+    // Generate JWT token with the payload and secret key
+    const token = jwt.sign(payload, secretKey, { expiresIn: '1h' }); // Token expires in 1 hour (you can adjust this value)
+
+    // Send the token as a response along with user data
+    return res.status(200).json({ user: payload, token, message: 'Login successful' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Login failed', error: error.message });
+  }
+});
+app.get('/userDetails/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const userDetails = {
+      fullName: user.fullName,
+      totalExpenses: user.expenses.reduce((total, transaction) => total + transaction.amount, 0),
+    };
+
+    return res.status(200).json({ userDetails });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to retrieve user details', error: error.message });
+  }
+});
   //update the user info
   app.put('/updateUser/:userId', async (req, res) => {
     try {
