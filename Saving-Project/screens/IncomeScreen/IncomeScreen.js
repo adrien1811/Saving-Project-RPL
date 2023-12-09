@@ -32,7 +32,6 @@ import {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-        
         <KeyboardAvoidingView style={{ alignItems: "center" }}>
           <Text style={styles.title}>Money Manager</Text>
   

@@ -24,13 +24,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#F5F6FA"
   },
-
   currencyText: {
     marginRight: 5,
     fontSize: SIZES.xxLarge,
     fontWeight: "bold",
   },
-
   rectangle: {
     marginTop: SIZES.Small,
     alignItems: "center",
