@@ -14,6 +14,7 @@ import InvestScreen from "../screens/InvestScreen/InvestScreen";
 import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen";
 import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import IncomeScreen from "../screens/IncomeScreen/IncomeScreen";
+import NewsScreen from "../screens/NewsScreen/NewsScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
@@ -102,7 +103,7 @@ const StackNavigator = () => {
             headerTitleAlign: "center",
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ProfileScreen"
           component={ProfileScreen}
           options={{
@@ -110,7 +111,7 @@ const StackNavigator = () => {
             headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="InvestScreen"
           component={InvestScreen}
           options={{
@@ -126,7 +127,7 @@ const StackNavigator = () => {
             headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ExpenseScreen"
           component={ExpenseScreen}
           options={{
@@ -144,6 +145,14 @@ const StackNavigator = () => {
           }}
         />
 
+        <Stack.Screen
+          name="NewsScreen"
+          component={NewsScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
