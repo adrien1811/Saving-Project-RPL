@@ -144,6 +144,29 @@ app.get('/userDetails/:userId', async (req, res) => {
     return res.status(500).json({ message: 'Failed to retrieve user details', error: error.message });
   }
 });
+app.get('/user/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Modify this as needed based on your user data structure
+    const userData = {
+      fullName: user.fullName,
+      emailAddress: user.emailAddress,
+      phoneNumber: user.phoneNumber,
+      age: user.age,
+      // Add other user data fields here if needed
+    };
+
+    return res.status(200).json({ user: userData });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to retrieve user data', error: error.message });
+  }
+});
   //update the user info
   app.put('/updateUser/:userId', async (req, res) => {
     try {

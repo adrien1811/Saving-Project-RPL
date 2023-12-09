@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,43 +7,55 @@ import {
   KeyboardAvoidingView,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { COLORS, SIZES } from "../../constants/theme";
 import styles from "./ProfileScreen.style";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState("Adrien Ardra Ramadhan");
-  const [age, setAge] = useState("21");
-  const [gender, setGender] = useState("Male");
-  const [email, setEmail] = useState("adrien.ardra@ui.ac.id");
-  const [phoneNumber, setPhoneNumber] = useState("081310310242");
+  const route = useRoute();
+  const userId = route.params?.userId;
 
-  const handleTextChange = (field, text) => {
-    switch (field) {
-      case "Name":
-        setName(text);
-        break;
-      case "Age":
-        setAge(text);
-        break;
-      case "Gender":
-        setGender(text);
-        break;
-      case "Email":
-        setEmail(text);
-        break;
-      case "Phone Number":
-        setPhoneNumber(text);
-        break;
-      default:
-        break;
+  const [userDetails, setUserDetails] = useState({
+    fullName: "",
+    emailAddress: "",
+    phoneNumber: "",
+    age: "",
+  });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const url = `http://192.168.10.122:8000/user/${userId}`;
+        const response = await fetch(url);
+
+        if (response.ok) {
+          const userData = await response.json();
+          setUserDetails({
+            fullName: userData.user.fullName,
+            emailAddress: userData.user.emailAddress,
+            phoneNumber: userData.user.phoneNumber,
+            age: userData.user.age ? userData.user.age.toString() : "",
+          });
+        } else {
+          console.log("Failed to fetch user data");
+          Alert.alert("Error", "Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        Alert.alert("Error", "An error occurred while fetching user data");
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
     }
-  };
+  }, [userId]);
 
   const renderEditableField = (label, value) => {
     return (
@@ -53,9 +65,8 @@ const ProfileScreen = () => {
           <TouchableOpacity
             onPress={() => handleTextChange(label, value)}
             activeOpacity={0.7}
-            style={{ position: 'absolute', left:250 }}
+            style={{ position: 'absolute', left: 250 }}
           >
-            <Text style={[styles.text, styles.changeText]}>Change</Text>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -83,11 +94,10 @@ const ProfileScreen = () => {
             justifyContent: "space-between",
           }}
         >
-          {renderEditableField("Name", name)}
-          {renderEditableField("Age", age)}
-          {renderEditableField("Gender", gender)}
-          {renderEditableField("Email", email)}
-          {renderEditableField("Phone Number", phoneNumber)}
+          {renderEditableField("Name", userDetails.fullName)}
+          {renderEditableField("Age", userDetails.age)}
+          {renderEditableField("Email", userDetails.emailAddress)}
+          {renderEditableField("Phone Number", userDetails.phoneNumber)}
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

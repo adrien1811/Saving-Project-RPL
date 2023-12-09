@@ -45,7 +45,9 @@ const LoginScreen = () => {
         const userId = responseData.user._id; // Assuming the userId is available in responseData.user._id
   
         // Navigate to HomePageScreen and pass userId as a parameter
+        navigation.navigate("ProfileScreen", { userId: userId });
         navigation.navigate("HomePageScreen", { userId: userId });
+
       } else {
         console.log('Login failed:', responseData);
         Alert.alert('Login Failed', 'Login failed. Please try again.');
