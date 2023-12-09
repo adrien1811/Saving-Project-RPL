@@ -11,24 +11,23 @@ import {
   import { AntDesign } from "@expo/vector-icons";
   import { useNavigation } from "@react-navigation/native";
   import { COLORS, FONT, SIZES } from '../../constants/theme';
-  import { useState } from "react";
+  import { useEffect, useState } from "react";
   
   const IncomeScreen = ({ value, onChangeText }) => {
     const navigation = useNavigation();
-    const [history, setHistory] = useState([
-      {
-        id: '1',
-        money: '3.800.000',
-        date: 'TUE 22 Jun 2020',
-        info: 'Gajian',
-      },
-      {
-        id: '2',
-        money: '200.000',
-        date: 'TUE 22 Jun 2020',
-        info: 'Return Saham',
-      },
-    ]);
+
+    const [history, setHistory] = useState([]);
+    const [totalAmount, setTotalAmount] = useState([]);
+
+    useEffect(() => {
+      fetch(`http://192.168.100.89:8000/income/6562f03c67d9dfe135627f3e`)
+        .then((response) => response.json())
+        .then((data) => {
+          const totalAmount = data.reduce((total, item) => total + item.amount, 0);
+          setTotalAmount(totalAmount);
+          setHistory(data);})
+        .catch((error) => console.error(error));
+    }, []);
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -53,8 +52,8 @@ import {
           </View>
 
           <View style={styles.rectangle}>
-                <Text style={styles.titleLabel}>Your Total Expenses</Text>
-                <Text style={styles.assetLabel}>Rp 3.550.000</Text>
+                <Text style={styles.titleLabel}>Your Total Income</Text>
+                <Text style={styles.assetLabel}>Rp {totalAmount}</Text>
             </View>
   
           <View style={{ marginTop: 20 }} />
@@ -80,14 +79,14 @@ import {
 
         <FlatList
         data= {history}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item._id}
         renderItem={({item}) => (
           <View style={styles.historyItem}>
-            <Text style= {styles.historyMoney}>Rp {item.money}</Text>
+            <Text style= {styles.historyMoney}>Rp {item.amount}</Text>
             <View style= {{
               justifyContent: 'space-between',
               flexDirection: 'row'}}>
-                <Text style= {styles.historyInfo}>{item.info}</Text> 
+                <Text style= {styles.historyInfo}>{item.description}</Text> 
                 <Text style= {styles.historyDate}>{item.date} </Text>
               </View>
           </View>
