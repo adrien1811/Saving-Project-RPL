@@ -56,7 +56,7 @@ const RegisterScreen = () => {
   };
   const validateEmail = (text) => {
     if (!emailRegex.test(text)) {
-      setErrorAlert('Invalid email address');
+      setErrorAlert("Invalid email address");
     } else {
       setErrorAlert(null);
     }
@@ -65,7 +65,7 @@ const RegisterScreen = () => {
 
   const validatePhoneNumber = (text) => {
     if (!phoneRegex.test(text)) {
-      setErrorAlert('Invalid phone number');
+      setErrorAlert("Invalid phone number");
     } else {
       setErrorAlert(null);
     }
@@ -74,7 +74,9 @@ const RegisterScreen = () => {
 
   const validatePassword = (text) => {
     if (!passwordRegex.test(text)) {
-      setErrorAlert('Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number');
+      setErrorAlert(
+        "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number"
+      );
     } else {
       setErrorAlert(null);
     }
@@ -94,7 +96,7 @@ const RegisterScreen = () => {
 
           <View style={{ marginTop: 50 }}>
             <View style={styles.ViewInput}>
-            <TextInput
+              <TextInput
                 style={styles.TextInput}
                 placeholder="Full name"
                 onChangeText={setFullName}
@@ -203,6 +205,23 @@ const RegisterScreen = () => {
                 }}
               >
                 Navigate to Stock?
+              </Text>
+            </Pressable>
+
+            <Pressable
+              onPress={() => {
+                navigation.navigate("NewsScreen");
+              }}
+            >
+              <Text
+                style={{
+                  color: COLORS.Saving_Blue,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  margin: 15,
+                }}
+              >
+                Navigate to News?
               </Text>
             </Pressable>
 

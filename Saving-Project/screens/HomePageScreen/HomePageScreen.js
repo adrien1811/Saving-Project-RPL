@@ -1,18 +1,31 @@
 import React, { useState, useEffect } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Modal, Pressable } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+  Modal,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import { COLORS, FONT, SIZES } from '../../constants/theme';
+import { COLORS, FONT, SIZES } from "../../constants/theme";
 
 const HomePageScreen = () => {
   const route = useRoute();
   const { userId } = route.params;
   const navigation = useNavigation();
   const [showMenu, setShowMenu] = useState(false);
-  const [fullName, setFullName] = useState(''); 
-  const [totalExpenses, setTotalExpenses] = useState(0); 
+  const [fullName, setFullName] = useState("");
+  const [totalExpenses, setTotalExpenses] = useState(0);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -25,10 +38,10 @@ const HomePageScreen = () => {
 
   const handleLogout = async () => {
     try {
-      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem("token");
       navigation.navigate("LoginScreen");
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error("Error during logout:", error);
     }
     setShowMenu(false);
   };
@@ -37,16 +50,16 @@ const HomePageScreen = () => {
     try {
       const url = `http://192.168.100.89:8000/userDetails/${userId}`;
       const response = await fetch(url);
-      
+
       if (response.ok) {
         const userDetails = await response.json();
         setFullName(userDetails.userDetails.fullName);
         setTotalExpenses(userDetails.userDetails.totalExpenses);
       } else {
-        console.error('Failed to fetch user details');
+        console.error("Failed to fetch user details");
       }
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      console.error("Error fetching user details:", error);
     }
   };
 
@@ -55,21 +68,20 @@ const HomePageScreen = () => {
   }, [userId]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       fetchUserDetails();
     });
 
     return unsubscribe;
   }, [navigation]);
-   const refreshScreenData = async () => {
-    
+  const refreshScreenData = async () => {
     try {
       // Refetch user details or perform necessary actions to update the screen data
       const userDetails = await fetchUserDetails(); // Example: Make API call to fetch user details
       setFullName(userDetails.fullName);
       setTotalExpenses(userDetails.totalExpenses);
     } catch (error) {
-      console.error('Error refreshing screen data:', error);
+      console.error("Error refreshing screen data:", error);
     }
   };
 
@@ -97,7 +109,10 @@ const HomePageScreen = () => {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modalContent}>
-              <TouchableOpacity style={styles.option} onPress={handleProfileNavigation}>
+              <TouchableOpacity
+                style={styles.option}
+                onPress={handleProfileNavigation}
+              >
                 <Text style={styles.optionText}>Profile</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.option} onPress={handleLogout}>
@@ -128,74 +143,78 @@ const HomePageScreen = () => {
             </View>
           </View>
           <View style={styles.row2}>
-          <Text style={styles.contentTitle2}>View Article</Text>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Pressable
-                  style={styles.btn}
-                  onPress={() => {
-                    navigation.navigate("ExpenseScreen", { userId });
-                  }}
-                >
-                  <Text style={styles.BtnText2}>View All</Text>
-                </Pressable>
-              </View>
-              </View>
-              <View style={styles.articleContainer}>
-              <Image
-              style={{
-               alignContent: "center",
-               width: 170,
-               height: 170
+            <Text style={styles.contentTitle2}>View Article</Text>
+            <View style={{ flex: 1, alignItems: "flex-end" }}>
+              <Pressable
+                style={styles.btn}
+                onPress={() => {
+                  navigation.navigate("NewsScreen", { userId });
                 }}
-               source={require("../../assets/article1.png")}
-        />
-              <Image
-               style={{
-               alignContent: "center",
-               width: 170,
-               height: 170
-               }}
-               source={require("../../assets/article2.png")}
-        />
-              </View>
-              <Text style={styles.contentTitle3}>Finance Calculating Tools</Text>
-               <Pressable
-          style={styles.investButton}
-          onPress={() => {
-            navigation.navigate("InvestScreen");
-          }}
-        >
-          <View style={styles.investButtonContent}>
-            <View style={styles.row}>
-              <Image
-                style={{
-                  width: 30,
-                  height: 30
-                }}
-                source={require("../../assets/images/result.png")}
-              />
-              <Text style={{
-                fontSize: SIZES.medium,
-                marginLeft: 20
-              }}>Investment Calculator</Text>
-              <Image
-                style={{
-                  width: 150,
-                  height: '100%', // agar gambar mengisi tinggi tombol
-                  resizeMode: 'contain',
-                }}
-                source={require("../../assets/images/invest.png")}
-              />
+              >
+                <Text style={styles.BtnText2}>View All</Text>
+              </Pressable>
             </View>
           </View>
-        </Pressable>
+          <View style={styles.articleContainer}>
+            <Image
+              style={{
+                alignContent: "center",
+                width: 170,
+                height: 170,
+              }}
+              source={require("../../assets/article1.png")}
+            />
+            <Image
+              style={{
+                alignContent: "center",
+                width: 170,
+                height: 170,
+              }}
+              source={require("../../assets/article2.png")}
+            />
+          </View>
+          <Text style={styles.contentTitle3}>Finance Calculating Tools</Text>
+          <Pressable
+            style={styles.investButton}
+            onPress={() => {
+              navigation.navigate("InvestScreen");
+            }}
+          >
+            <View style={styles.investButtonContent}>
+              <View style={styles.row}>
+                <Image
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                  source={require("../../assets/images/result.png")}
+                />
+                <Text
+                  style={{
+                    fontSize: SIZES.medium,
+                    marginLeft: 20,
+                  }}
+                >
+                  Investment Calculator
+                </Text>
+                <Image
+                  style={{
+                    width: 150,
+                    height: "100%", // agar gambar mengisi tinggi tombol
+                    resizeMode: "contain",
+                  }}
+                  source={require("../../assets/images/invest.png")}
+                />
+              </View>
+            </View>
+          </Pressable>
           <Image
-          style={{
-            alignContent: "center",
-            height: 200,
-          }}
-          source={require("../../assets/Vector7.png")}
-        />
+            style={{
+              alignContent: "center",
+              height: 200,
+            }}
+            source={require("../../assets/Vector7.png")}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -232,7 +251,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 6,
     textAlign: "left",
-    width:"100%",
+    width: "100%",
     marginLeft: 60,
     fontSize: SIZES.medium,
     fontWeight: "bold",
@@ -290,7 +309,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: SIZES.small,
     height: 35,
-    width:120,
+    width: 120,
     marginLeft: 30,
     justifyContent: "center",
     paddingHorizontal: 15,

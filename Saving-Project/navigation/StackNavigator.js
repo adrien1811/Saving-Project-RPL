@@ -14,11 +14,12 @@ import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen
 import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import IncomeScreen from "../screens/IncomeScreen/IncomeScreen";
 import NewsScreen from "../screens/NewsScreen/NewsScreen";
-import StockScreen from "../screens/StockScreen/StockScreen"
+import NewsDetailsScreen from "../screens/NewsDetailsScreen/NewsDetailsScreen";
+import WebViewerScreen from "../screens/WebViewerScreen/WebViewerScreen";
+import StockScreen from "../screens/StockScreen/StockScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
-
 
 const StackNavigator = ({ userId }) => {
   const Stack = createStackNavigator();
@@ -158,6 +159,23 @@ const StackNavigator = ({ userId }) => {
           name="NewsScreen"
           initialParams={{ userId: userId }}
           component={NewsScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="NewsDetailsScreen"
+          initialParams={{ userId: userId }}
+          component={NewsDetailsScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="WebViewerScreen"
+          component={WebViewerScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,
