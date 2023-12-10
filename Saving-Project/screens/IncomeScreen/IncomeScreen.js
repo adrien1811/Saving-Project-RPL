@@ -9,18 +9,19 @@ import {
   import { SafeAreaView } from "react-native-safe-area-context";
   import styles from "./IncomeScreen.style";
   import { AntDesign } from "@expo/vector-icons";
-  import { useNavigation } from "@react-navigation/native";
+  import { useNavigation, useRoute } from "@react-navigation/native";
   import { COLORS, FONT, SIZES } from '../../constants/theme';
   import { useEffect, useState } from "react";
   
   const IncomeScreen = ({ value, onChangeText }) => {
     const navigation = useNavigation();
-
+    const route = useRoute(); // Initialize route with useRoute
+    const { userId } = route.params;
     const [history, setHistory] = useState([]);
     const [totalAmount, setTotalAmount] = useState([]);
 
     useEffect(() => {
-      fetch(`http://192.168.100.89:8000/income/6562f03c67d9dfe135627f3e`)
+      fetch(`http://192.168.100.89:8000/income/${userId}`)
         .then((response) => response.json())
         .then((data) => {
           const totalAmount = data.reduce((total, item) => total + item.amount, 0);

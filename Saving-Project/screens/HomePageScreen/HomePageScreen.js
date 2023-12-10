@@ -8,7 +8,7 @@ import { COLORS, FONT, SIZES } from '../../constants/theme';
 
 const HomePageScreen = () => {
   const route = useRoute(); // Initialize route with useRoute
-  const { userId } = route.params;
+  const { userId } = route.params || {};;
   const navigation = useNavigation();
   const [showMenu, setShowMenu] = useState(false);
   const [fullName, setFullName] = useState(''); // Define fullName in the state
@@ -37,7 +37,7 @@ const HomePageScreen = () => {
     // Function to fetch user details based on userId
     const fetchUserDetails = async () => {
       try {
-        const url = `http://192.168.10.122:8000/userDetails/${userId}`;
+        const url = `http://192.168.100.89:8000/userDetails/${userId}`;
         const response = await fetch(url);
 
         if (response.ok) {
@@ -95,7 +95,7 @@ const HomePageScreen = () => {
                 <Pressable
                   style={styles.btn}
                   onPress={() => {
-                    navigation.navigate("ExpenseScreen");
+                    navigation.navigate("ExpenseScreen", { userId });
                   }}
                 >
                   <Text style={styles.BtnText}>View More</Text>
@@ -109,7 +109,7 @@ const HomePageScreen = () => {
                 <Pressable
                   style={styles.btn}
                   onPress={() => {
-                    navigation.navigate("ExpenseScreen");
+                    navigation.navigate("ExpenseScreen", { userId });
                   }}
                 >
                   <Text style={styles.BtnText2}>View All</Text>

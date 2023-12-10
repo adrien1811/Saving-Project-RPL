@@ -9,17 +9,20 @@ import {
   import { SafeAreaView } from "react-native-safe-area-context";
   import styles from "./ExpenseScreen.style";
   import { AntDesign } from "@expo/vector-icons";
-  import { useNavigation } from "@react-navigation/native";
+  import { useNavigation, useRoute } from "@react-navigation/native";
   import { COLORS, FONT, SIZES } from '../../constants/theme';
   import { useEffect, useState } from "react";
   
-  const ExpenseScreen = ({ value, onChangeText }) => {
+  
+  const ExpenseScreen = ({ }) => {
     const navigation = useNavigation();
+    const route = useRoute(); // Initialize route with useRoute
+    const { userId } = route.params;
     const [history, setHistory] = useState([]);
     const [totalAmount, setTotalAmount] = useState([]);
 
     useEffect(() => {
-      fetch(`http://192.168.100.89:8000/expenses/6562f03c67d9dfe135627f3e`)
+      fetch(`http://192.168.100.89:8000/expenses/${userId}`)
         .then((response) => response.json())
         .then((data) => {
           const totalAmount = data.reduce((total, item) => total + item.amount, 0);
@@ -55,6 +58,17 @@ import {
                 <Text style={styles.assetLabel}>Rp {totalAmount}</Text>
             </View>
   
+          <View style={{ marginTop: 20 }} />
+
+          <Pressable
+                  style={styles.btn}
+                  onPress={() => {
+                    navigation.navigate("IncomeScreen", { userId });
+                  }}
+                >
+                  <Text style={styles.BtnText}>See Income</Text>
+                </Pressable>
+
           <View style={{ marginTop: 20 }} />
   
         <View style={styles.ContainerRow}>
