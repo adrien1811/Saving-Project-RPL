@@ -7,19 +7,19 @@ import { AntDesign } from "@expo/vector-icons";
 import { COLORS, FONT, SIZES } from '../../constants/theme';
 
 const HomePageScreen = () => {
-  const route = useRoute(); // Initialize route with useRoute
-  const { userId } = route.params || {};;
+  const route = useRoute();
+  const { userId } = route.params;
   const navigation = useNavigation();
   const [showMenu, setShowMenu] = useState(false);
-  const [fullName, setFullName] = useState(''); // Define fullName in the state
-  const [totalExpenses, setTotalExpenses] = useState(0); // Define totalExpenses in the state
+  const [fullName, setFullName] = useState(''); 
+  const [totalExpenses, setTotalExpenses] = useState(0); 
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
   const handleProfileNavigation = () => {
-    navigation.navigate("ProfileScreen");
+    navigation.navigate("ProfileScreen", { userId: userId });
     setShowMenu(false);
   };
 
@@ -34,7 +34,6 @@ const HomePageScreen = () => {
   };
 
   useEffect(() => {
-    // Function to fetch user details based on userId
     const fetchUserDetails = async () => {
       try {
         const url = `http://192.168.100.89:8000/userDetails/${userId}`;
@@ -52,8 +51,8 @@ const HomePageScreen = () => {
       }
     };
 
-    fetchUserDetails(); // Fetch user details when the component mounts
-  }, [userId]); // Ensure useEffect runs when userId changes
+    fetchUserDetails(); 
+  }, [userId]);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView showsVerticalScrollIndicator={false}>

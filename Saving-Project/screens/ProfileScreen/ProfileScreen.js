@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, Pressable } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -56,7 +56,9 @@ const ProfileScreen = () => {
       fetchUserData();
     }
   }, [userId]);
-
+   const handleNavigateToHomePage = () => {
+    navigation.navigate('HomePageScreen', { userId: userId });
+  };
   const renderEditableField = (label, value) => {
     return (
       <View style={styles.ViewInput}>
@@ -98,6 +100,12 @@ const ProfileScreen = () => {
           {renderEditableField("Age", userDetails.age)}
           {renderEditableField("Email", userDetails.emailAddress)}
           {renderEditableField("Phone Number", userDetails.phoneNumber)}
+          
+          <View style={styles.centerHomeBtn}>
+            <TouchableOpacity onPress={handleNavigateToHomePage} style={styles.Btn}>
+              <Text style={styles.BtnText}>Home</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

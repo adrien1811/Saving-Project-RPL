@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,17 +13,21 @@ import InvestScreen from "../screens/InvestScreen/InvestScreen";
 import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen";
 import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import IncomeScreen from "../screens/IncomeScreen/IncomeScreen";
+import NewsScreen from "../screens/NewsScreen/NewsScreen";
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
 
-const StackNavigator = () => {
+
+const StackNavigator = ({ userId }) => {
   const Stack = createStackNavigator();
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="SignUpScreen"
+          initialParams={{ userId: userId }}
           component={SignUpScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -33,6 +36,7 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="SplashScreen"
+          initialParams={{ userId: userId }}
           component={SplashScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -41,6 +45,7 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="LoginScreen"
+          initialParams={{ userId: userId }}
           component={LoginScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -49,6 +54,7 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="RegisterScreen"
+          initialParams={{ userId: userId }}
           component={RegisterScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -57,6 +63,7 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="HomePageScreen"
+          initialParams={{ userId: userId }}
           component={HomePageScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -65,10 +72,10 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="ConfirmationScreen"
+          initialParams={{ userId: userId }}
           component={ConfirmationScreen}
           options={{
             headerTitle: () => <Header name="Transaction" />,
-
             headerStyle: {
               backgroundColor: COLORS.Saving_Blue,
               borderBottomRightRadius: 60,
@@ -82,13 +89,12 @@ const StackNavigator = () => {
             headerTitleAlign: "center",
           }}
         />
-
         <Stack.Screen
           name="TransferScreen"
+          initialParams={{ userId: userId }}
           component={TransferScreen}
           options={{
             headerTitle: () => <Header name="Transfer" />,
-
             headerStyle: {
               backgroundColor: COLORS.Saving_Blue,
               borderBottomRightRadius: 60,
@@ -102,16 +108,18 @@ const StackNavigator = () => {
             headerTitleAlign: "center",
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ProfileScreen"
+          initialParams={{ userId: userId }}
           component={ProfileScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="InvestScreen"
+          initialParams={{ userId: userId }}
           component={InvestScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
@@ -120,35 +128,43 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="InvestResultScreen"
+          initialParams={{ userId: userId }}
           component={InvestResultScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,
           }}
         />
-          <Stack.Screen
+        <Stack.Screen
           name="ExpenseScreen"
+          initialParams={{ userId: userId }}
           component={ExpenseScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,
           }}
         />
-
         <Stack.Screen
           name="IncomeScreen"
+          initialParams={{ userId: userId }}
           component={IncomeScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,
           }}
         />
-
+        <Stack.Screen
+          name="NewsScreen"
+          initialParams={{ userId: userId }}
+          component={NewsScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default StackNavigator;
-
-const styles = StyleSheet.create({});

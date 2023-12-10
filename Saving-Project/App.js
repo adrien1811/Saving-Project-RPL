@@ -1,13 +1,35 @@
 import { StatusBar } from 'expo-status-bar';
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import StackNavigator from './navigation/StackNavigator';
 import 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const storedUserId = await AsyncStorage.getItem('12345'); 
+  
+        if (storedUserId) {
+          console.log('User ID found in AsyncStorage:', storedUserId);
+        } else {
+          console.log('User ID not found in AsyncStorage');
+        }
+      } catch (error) {
+        console.error('Error fetching userId:', error);
+        Alert.alert('Error', 'An error occurred while fetching userId.');
+      }
+    };
+  
+    fetchUserId();
+  }, []);
   return (
    
    <>
-  <StackNavigator/>
+   <StackNavigator userId={userId} /> 
    </>
 
   );
