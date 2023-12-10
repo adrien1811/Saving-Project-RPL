@@ -14,6 +14,7 @@ import InvestResultScreen from "../screens/InvestResultScreen/InvestResultScreen
 import ExpenseScreen from "../screens/ExpenseScreen/ExpenseScreen";
 import IncomeScreen from "../screens/IncomeScreen/IncomeScreen";
 import NewsScreen from "../screens/NewsScreen/NewsScreen";
+import StockScreen from "../screens/StockScreen/StockScreen"
 import { COLORS } from "../constants/theme";
 import "react-native-gesture-handler";
 import Header from "../screens/Header";
@@ -157,6 +158,15 @@ const StackNavigator = ({ userId }) => {
           name="NewsScreen"
           initialParams={{ userId: userId }}
           component={NewsScreen}
+          options={{
+            headerStyle: { backgroundColor: "white" },
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="StockScreen"
+          initialParams={{ userId: userId }}
+          component={StockScreen}
           options={{
             headerStyle: { backgroundColor: "white" },
             headerShown: false,

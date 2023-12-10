@@ -35,7 +35,7 @@ const HomePageScreen = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const url = `http://192.168.10.122:8000/userDetails/${userId}`;
+      const url = `http://192.168.100.89:8000/userDetails/${userId}`;
       const response = await fetch(url);
       
       if (response.ok) {

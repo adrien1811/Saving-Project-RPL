@@ -28,7 +28,7 @@ const RegisterScreen = () => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("http://192.168.10.122:8000/register", {
+      const response = await fetch("http://192.168.100.89:8000/register", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -191,7 +191,7 @@ const RegisterScreen = () => {
 
             <Pressable
               onPress={() => {
-                navigation.navigate("ExpenseScreen");
+                navigation.navigate("StockScreen");
               }}
             >
               <Text
@@ -202,24 +202,7 @@ const RegisterScreen = () => {
                   margin: 15,
                 }}
               >
-                Navigate to Expense?
-              </Text>
-            </Pressable>
-            
-            <Pressable
-              onPress={() => {
-                navigation.navigate("IncomeScreen");
-              }}
-            >
-              <Text
-                style={{
-                  color: COLORS.Saving_Blue,
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  margin: 15,
-                }}
-              >
-                Navigate to Income?
+                Navigate to Stock?
               </Text>
             </Pressable>
 
