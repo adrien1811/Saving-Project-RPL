@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, Modal, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useFocusEffect } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS, FONT, SIZES } from '../../constants/theme';
 
@@ -33,26 +33,51 @@ const HomePageScreen = () => {
     setShowMenu(false);
   };
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      try {
-        const url = `http://192.168.100.89:8000/userDetails/${userId}`;
-        const response = await fetch(url);
-
-        if (response.ok) {
-          const userDetails = await response.json();
-          setFullName(userDetails.userDetails.fullName);
-          setTotalExpenses(userDetails.userDetails.totalExpenses);
-        } else {
-          console.error('Failed to fetch user details');
-        }
-      } catch (error) {
-        console.error('Error fetching user details:', error);
+  const fetchUserDetails = async () => {
+    try {
+      const url = `http://192.168.10.122:8000/userDetails/${userId}`;
+      const response = await fetch(url);
+      
+      if (response.ok) {
+        const userDetails = await response.json();
+        setFullName(userDetails.userDetails.fullName);
+        setTotalExpenses(userDetails.userDetails.totalExpenses);
+      } else {
+        console.error('Failed to fetch user details');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
+  };
 
-    fetchUserDetails(); 
+  useEffect(() => {
+    fetchUserDetails();
   }, [userId]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchUserDetails();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+   const refreshScreenData = async () => {
+    
+    try {
+      // Refetch user details or perform necessary actions to update the screen data
+      const userDetails = await fetchUserDetails(); // Example: Make API call to fetch user details
+      setFullName(userDetails.fullName);
+      setTotalExpenses(userDetails.totalExpenses);
+    } catch (error) {
+      console.error('Error refreshing screen data:', error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      refreshScreenData();
+    }, [])
+  );
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -90,7 +115,7 @@ const HomePageScreen = () => {
             <View style={styles.cardContent}>
               <Text style={styles.expenseText}>Your Total Expense</Text>
               <View style={styles.row}>
-                <Text style={styles.expenseAmount}>{totalExpenses}</Text>
+                <Text style={styles.expenseAmount}> Rp {totalExpenses}</Text>
                 <Pressable
                   style={styles.btn}
                   onPress={() => {

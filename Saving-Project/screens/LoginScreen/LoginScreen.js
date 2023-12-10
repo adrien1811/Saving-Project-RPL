@@ -22,7 +22,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      const url = "http://192.168.100.89:8000/login";
+      const url = "http://192.168.10.122:8000/login";
       const requestBody = {
         emailAddress: emailAddress,
         password: password,
@@ -44,6 +44,7 @@ const LoginScreen = () => {
         const userId = responseData.user._id; 
   
         await AsyncStorage.setItem('12345', userId);
+        navigation.navigate("HomePageScreen", { userId: userId });
         navigation.navigate("ProfileScreen", { userId: userId });
         navigation.navigate("HomePageScreen", { userId: userId });
 

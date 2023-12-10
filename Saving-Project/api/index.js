@@ -224,69 +224,121 @@ app.get('/user/:userId', async (req, res) => {
     }
   });
   
-  // Add an income transaction for a user
-  app.post('/addIncome/:userId', async (req, res) => {
-    try {
-      const { amount, category, description } = req.body;
-      const userId = req.params.userId;
-  
-      if (!amount || !category || !description) {
-        return res.status(400).json({ message: 'Amount and category are required fields' });
-      }
-  
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-  
-      const currentDate = new Date();
-      user.income.push({
-        amount,
-        category,
-        description,
-        date: currentDate,
-      });
-  
-      await user.save();
-  
-      return res.status(201).json({ message: 'Income transaction added successfully' });
-    } catch (error) {
-      return res.status(500).json({ message: 'Failed to add income transaction', error: error.message });
+// Add an income transaction for a user
+// Add an income transaction for a user
+// Add income transaction for a user based on category
+app.post('/addIncome/:userId', async (req, res) => {
+  try {
+    const { amount, category, description } = req.body;
+    const userId = req.params.userId;
+
+    if (!amount || !category || !description) {
+      return res.status(400).json({ message: 'Amount, category, and description are required fields' });
     }
-  });
-  
-  // Add an expense transaction for a user
-  app.post('/addExpense/:userId', async (req, res) => {
-    try {
-      const { amount, category, description } = req.body;
-      const userId = req.params.userId;
-  
-      if (!amount || !category || !description) {
-        return res.status(400).json({ message: 'Amount and category are required fields' });
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Ensure the category is one of the allowed income categories
+    const allowedIncomeCategories = ['salary', 'other income', 'essential']; // Include all allowed categories
+    if (!allowedIncomeCategories.includes(category)) {
+      return res.status(400).json({ message: 'Invalid category for income transaction' });
+    }
+
+    // Check if user.totalIncome exists and hasOwnProperty
+    if (!user.totalIncome || typeof user.totalIncome !== 'object') {
+      user.totalIncome = {}; // Initialize totalIncome object if it doesn't exist or not an object
+    }
+
+    // Initialize the totalIncome object properties if they are not defined
+    allowedIncomeCategories.forEach((allowedCategory) => {
+      if (!user.totalIncome.hasOwnProperty(allowedCategory)) {
+        user.totalIncome[allowedCategory] = 0;
       }
-  
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+    });
+
+    // Automatically generate the current date
+    const currentDate = new Date();
+
+    // Push the transaction into the income array
+    user.income.push({
+      amount,
+      category,
+      description,
+      date: currentDate, // Assign the generated current date
+    });
+
+    // Update the total income for the category
+    user.totalIncome[category] += amount;
+
+    await user.save();
+
+    return res.status(201).json({ message: 'Income transaction added successfully' });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to add income transaction', error: error.message });
+  }
+});
+
+
+app.post('/addExpense/:userId', async (req, res) => {
+  try {
+    const { amount, category, description } = req.body;
+    const userId = req.params.userId;
+
+    if (!amount || !category || !description) {
+      return res.status(400).json({ message: 'Amount, category, and description are required fields' });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Ensure the category is one of the allowed expense categories
+    const allowedExpenseCategories = ['essential', 'transportation', 'entertainment', 'savings'];
+    if (allowedExpenseCategories.includes(category)) {
+      // Check if user.totalExpenses exists and is an object
+      if (!user.totalExpenses || typeof user.totalExpenses !== 'object') {
+        user.totalExpenses = {}; // Initialize totalExpenses object if it doesn't exist or not an object
       }
-  
+
+      // Initialize the totalExpenses object properties if they are not defined
+      allowedExpenseCategories.forEach((allowedCategory) => {
+        if (!user.totalExpenses.hasOwnProperty(allowedCategory)) {
+          user.totalExpenses[allowedCategory] = 0;
+        }
+      });
+
+      // Automatically generate the current date
       const currentDate = new Date();
+
+      // Push the transaction into the expenses array
       user.expenses.push({
         amount,
         category,
         description,
-        date: currentDate,
+        date: currentDate, // Assign the generated current date
       });
-  
+
+      // Update the total expenses for the category
+      user.totalExpenses[category] += amount;
+
       await user.save();
-  
+
       return res.status(201).json({ message: 'Expense transaction added successfully' });
-    } catch (error) {
-      return res.status(500).json({ message: 'Failed to add expense transaction', error: error.message });
+    } else {
+      return res.status(400).json({ message: 'Invalid category for expense transaction' });
     }
-  });
+  } catch (error) {
+    return res.status(500).json({ message: 'Failed to add expense transaction', error: error.message });
+  }
+});
+
+
 
 // Get income transactions for a user
 app.get('/income/:userId', async (req, res) => {
@@ -322,7 +374,7 @@ app.get('/expenses/:userId', async (req, res) => {
   }
 });
 
-//display total income
+// Display total income and each income category's amount
 app.get('/totalIncome/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -332,15 +384,25 @@ app.get('/totalIncome/:userId', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const totalIncome = user.income.reduce((total, transaction) => total + transaction.amount, 0);
+    const income = user.income;
 
-    return res.status(200).json({ totalIncome });
+    // Calculate total income for each category
+    const totalIncomeByCategory = {};
+    income.forEach((transaction) => {
+      if (totalIncomeByCategory[transaction.category]) {
+        totalIncomeByCategory[transaction.category] += transaction.amount;
+      } else {
+        totalIncomeByCategory[transaction.category] = transaction.amount;
+      }
+    });
+
+    return res.status(200).json({ totalIncomeByCategory });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to retrieve total income', error: error.message });
   }
 });
 
-//display total expense
+// Display total expense and each expense category's amount
 app.get('/totalExpenses/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
@@ -349,9 +411,20 @@ app.get('/totalExpenses/:userId', async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    const totalExpenses = user.expenses.reduce((total, transaction) => total + transaction.amount, 0);
 
-    return res.status(200).json({ totalExpenses });
+    const expenses = user.expenses;
+
+    // Calculate total expenses for each category
+    const totalExpensesByCategory = {};
+    expenses.forEach((transaction) => {
+      if (totalExpensesByCategory[transaction.category]) {
+        totalExpensesByCategory[transaction.category] += transaction.amount;
+      } else {
+        totalExpensesByCategory[transaction.category] = transaction.amount;
+      }
+    });
+
+    return res.status(200).json({ totalExpensesByCategory });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to retrieve total expenses', error: error.message });
   }

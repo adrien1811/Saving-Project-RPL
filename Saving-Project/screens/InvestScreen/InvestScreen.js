@@ -12,11 +12,12 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, SIZES } from "../../constants/theme";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const InvestScreen = () => {
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const { userId } = route.params;
   const [stockName, setStockName] = useState("");
   const [profitPerYear, setProfitPerYear] = useState("");
   const [duration, setDuration] = useState("");
@@ -88,7 +89,7 @@ const InvestScreen = () => {
           <Pressable
             style={[styles.Btn, styles.CancelBtn]}
             onPress={() => {
-              navigation.navigate("HomePageScreen");
+              navigation.navigate("HomePageScreen", { userId });
             }}
           >
             <Text style={[styles.BtnText, styles.CancelText]}>Cancel</Text>

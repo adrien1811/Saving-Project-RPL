@@ -8,16 +8,29 @@ import {
   KeyboardAvoidingView,
   Pressable,
 } from "react-native";
-import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { COLORS, SIZES } from "../../constants/theme";
 import styles from "./ConfirmationScreen.style";
 import { AntDesign } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
 const ConfirmationScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { userId } = route.params;
+  const refreshHomeScreen = () => {
+    // Add logic here to refresh the home screen data
+    console.log('Home screen is refreshed!');
+  };
+  useEffect(() => {
+    // Add a listener to refresh the screen when it gains focus
+    const unsubscribe = navigation.addListener('focus', () => {
+      refreshHomeScreen();
+    });
 
+    // Clean up the listener when the component unmounts
+    return unsubscribe;
+  }, [navigation]);
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <KeyboardAvoidingView style={{ alignItems: "center" }}>
@@ -38,7 +51,7 @@ const ConfirmationScreen = () => {
         <View style={{ marginTop: 120 }}>
           <Pressable
             onPress={() => {
-              navigation.navigate("TransferScreen"); // Navigate to the Transfer screen
+              navigation.navigate("TransferScreen", { userId }); // Navigate to the Transfer screen
             }}
             style={styles.Btn}
           >
@@ -47,7 +60,7 @@ const ConfirmationScreen = () => {
 
           <Pressable
             onPress={() => {
-              navigation.navigate("HomePageScreen"); // Navigate to the Homepage screen
+              navigation.navigate("HomePageScreen", { userId }); // Navigate to the Homepage screen
             }}
             style={styles.Btn2}
           >

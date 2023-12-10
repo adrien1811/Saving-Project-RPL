@@ -34,13 +34,14 @@ const styles = StyleSheet.create({
   TextInput: {
     opacity: 0.7,
     height: 70,
-    width: 70,
+    width: 160,
     paddingVertical: 5,
     paddingHorizontal: SIZES.medium,
     borderRadius: SIZES.medium,
     fontSize: SIZES.xxLarge,
     fontWeight: "bold",
     textAlign: 'center',
+    backgroundColor:"white"
   },
 
   BtnContainerRow: {
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: SIZES.xLarge,
     marginBottom: 10,
+    marginTop: 10,
     gap: 10
   },
 

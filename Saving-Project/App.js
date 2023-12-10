@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import StackNavigator from './navigation/StackNavigator';
 import 'react-native-gesture-handler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function App() {
   const [userId, setUserId] = useState(null);
