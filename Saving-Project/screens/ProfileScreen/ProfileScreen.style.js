@@ -53,7 +53,28 @@ const styles = StyleSheet.create({
   },
   margin: {
     marginTop: 25,
-  }
+  },
+  Btn: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: COLORS.Saving_Blue,
+    borderRadius: SIZES.medium,
+    height: 50,
+    width: 120,
+    marginBottom: 10,
+  },
+
+  BtnText: {
+    textAlign: 'center',
+    color: "white",
+    alignItems: 'center',
+    padding: 15,
+    fontSize: SIZES.medium,
+  },
+  centerHomeBtn: {
+    marginTop:20,
+    alignItems: 'center',
+  },
 });
 
 export default styles;
