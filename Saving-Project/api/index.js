@@ -423,7 +423,7 @@ app.get('/totalExpenses/:userId', async (req, res) => {
         totalExpensesByCategory[transaction.category] = transaction.amount;
       }
     });
-
+    //never gonna give you up
     return res.status(200).json({ totalExpensesByCategory });
   } catch (error) {
     return res.status(500).json({ message: 'Failed to retrieve total expenses', error: error.message });
