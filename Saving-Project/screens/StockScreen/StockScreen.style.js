@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   ViewInput: {
     alignItems: "center",
     gap: SIZES.medium,
+    flexDirection:"row"
   },
 
   TextInput: {

@@ -48,7 +48,7 @@ const HomePageScreen = () => {
 
   const fetchUserDetails = async () => {
     try {
-      const url = `http://192.168.100.89:8000/userDetails/${userId}`;
+      const url = `http://192.168.10.122:8000/userDetails/${userId}`;
       const response = await fetch(url);
 
       if (response.ok) {
@@ -173,6 +173,7 @@ const HomePageScreen = () => {
               source={require("../../assets/article2.png")}
             />
           </View>
+          
           <Text style={styles.contentTitle3}>Finance Calculating Tools</Text>
           <Pressable
             style={styles.investButton}
@@ -208,6 +209,23 @@ const HomePageScreen = () => {
               </View>
             </View>
           </Pressable>
+          <Text style={styles.contentTitle3}>Stock Recomendation</Text>
+          <Pressable
+          onPress={() => {
+         navigation.navigate("StockScreen");
+          }}
+          >
+        <View style={styles.stockImageContainer}>
+       <Image
+        style={{
+        alignContent: "center",
+        width: 340,
+        height: 80,
+          }}
+       source={require("../../assets/stock2.jpg")}
+        />
+       </View>
+      </Pressable>
           <Image
             style={{
               alignContent: "center",
@@ -329,8 +347,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 20,
     width: 340,
-    height: 80,
+    height: 70,
     borderRadius: 10,
+    opacity:0.7,
     margin: 10,
     backgroundColor: "#DEF4DE",
   },
@@ -367,6 +386,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "blue",
     textAlign: "center",
+  },
+    stockImageContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10, // Adjust margin as per your UI requirement
   },
 });
 

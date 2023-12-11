@@ -22,7 +22,7 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      const url = "http://192.168.100.89:8000/login";
+      const url = "http://192.168.10.122:8000/login";
       const requestBody = {
         emailAddress: emailAddress,
         password: password,
@@ -108,7 +108,6 @@ const LoginScreen = () => {
             <Text style={styles.BtnText}>Login</Text>
           </Pressable>
         </View>
-
         <Image
           style={{
             alignContent: "center",
